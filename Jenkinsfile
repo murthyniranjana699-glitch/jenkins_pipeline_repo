@@ -1,16 +1,25 @@
 pipeline {
-    agent any
+    agent none
 
     stages{
         stage('STAGE1'){
+
+            agent {lable 'my_slave1'}
+
             steps{
-                sh 'sleep 5'
                 echo "This is the stage1"
+                sh '''
+                sleep 10
+                echo "This is the stage1"
+                '''
                 
             }
 
         } 
-        stage('STAGE2'){
+        stage('Build'){
+
+            agent {lable 'my_slave2'}
+
             steps{
                 sh '''
                 #!/bin/bash
