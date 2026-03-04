@@ -1,0 +1,31 @@
+pipeline {
+    agent {label 'my_slave1 $$ my_slave2'}
+    agent {label 'my_slave1 || my_slave2'}
+    agent {label '!master'}
+
+    stages{
+        stage('STAGE1'){
+            steps{
+                sh 'sleep 5'
+                echo "This is the stage1"
+                
+            }
+
+        } 
+        stage('STAGE2'){
+            steps{
+                sh '''
+                #!/bin/bash
+                ls -lrt
+                pwd
+                sleep 10
+                '''
+                echo "This is the stage2"
+            }
+        }
+            
+    }
+    
+        
+    
+}
