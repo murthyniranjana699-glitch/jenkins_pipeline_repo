@@ -1,38 +1,24 @@
 pipeline {
     agent none
 
+    parameters{
+        string{name: 'NAME', default: '', description: 'Please provide info about you'}
+        booleanParam{name: 'SKIP_TEST', default: 'false', description: 'test failes hence failed'}
+        choice{name: 'BRANCH', choices:['master', 'staging', 'prod',] description: 'choose the proper env for deployment'}
+    }
+
     stages{
         stage('STAGE1'){
 
             agent {label 'my_slave1'}
 
             steps{
-                echo "This is the stage1"
-                sh '''
-                sleep 10
-                echo "This is the stage1"
-                '''
-                
+                echo "TNAME: ${params.NAME}"
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                echo "BARNCH TO DEPLOY: ${params.BRANCH}"
             }
 
         } 
-        stage('Build'){
-
-            agent {label 'my_slave2'}
-
-            steps{
-                sh '''
-                #!/bin/bash
-                ls -lrt
-                pwd
-                sleep 10
-                '''
-                echo "This is the stage2"
-            }
-        }
-            
     }
-    
-        
     
 }
