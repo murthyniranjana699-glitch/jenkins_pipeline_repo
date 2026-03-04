@@ -4,7 +4,7 @@ pipeline {
     parameters{
         string(name: 'NAME', default: 'defaultValue', description: 'Please provide info about you')
         booleanParam(name: 'SKIP_TEST', default: 'false', description: 'test failes hence failed')
-        choice(name: 'BRANCH', choices:['master', 'staging', 'prod',] description: 'choose the proper env for deployment')
+        choice(name: 'BRANCH', choices:['master', 'staging', 'prod'] description: 'choose the proper env for deployment')
     }
 
     stages{
