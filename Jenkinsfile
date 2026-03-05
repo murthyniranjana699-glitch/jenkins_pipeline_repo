@@ -9,9 +9,15 @@ pipeline {
 
     stages{
         stage('STAGE1'){
+
+            environment{
+                    STAGE = 'STAGE1'
+                    }
+
             steps{
-                echo "NAME: ${DOCKER_USER}"
-                echo "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
+                echo "NAME: ${env.DOCKER_USER}"
+                echo "AWS_ACCESS_KEY: ${env.AWS_ACCESS_KEY}"
+                echo "STAGE: ${env.STAGE}"
 
                 sh '''
                     env
@@ -19,6 +25,23 @@ pipeline {
             }
 
         } 
-    }
-    
+
+         stage('STAGE2'){
+
+            environment{
+                    STAGE = 'STAGE2'
+                    }
+
+            steps{
+                echo "NAME: ${env.DOCKER_USER}"
+                echo "AWS_ACCESS_KEY: ${env.AWS_ACCESS_KEY}"
+                echo "STAGE: ${env.STAGE}"
+
+                sh '''
+                    env
+                '''
+            }
+
+        } 
+    }    
 }
