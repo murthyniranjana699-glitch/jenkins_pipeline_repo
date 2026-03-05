@@ -1,26 +1,20 @@
 pipeline {
     agent none
 
-    parameters{
-        string(name: 'NAME', defaultValue: 'niranjan', description: 'Please provide info about you')
-        booleanParam(name: 'SKIP_TEST', defaultValue: 'false', description: 'test failes hence failed')
-        choice(name: 'BRANCH', choices:['master', 'staging', 'prod'], description: 'choose the proper env for deployment')
+    environment{
+        DOCKER_USER = 'niranjan'
+        AWS_ACCESS_KEY = '876740i0987987'
+
     }
 
     stages{
         stage('STAGE1'){
-
-            agent {label 'my_slave1'}
-
             steps{
-                echo "TNAME: ${params.NAME}"
-                echo "SKIP_TEST: ${params.SKIP_TEST}"
-                echo "BARNCH TO DEPLOY: ${params.BRANCH}"
+                echo "NAME: ${DOCKER_USER}"
+                echo "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
 
                 sh '''
-                    echo "TNAME: ${NAME}"
-                    echo "SKIP_TEST: ${SKIP_TEST}"
-                    echo "BARNCH TO DEPLOY: ${BRANCH}"
+                    env
                 '''
             }
 
