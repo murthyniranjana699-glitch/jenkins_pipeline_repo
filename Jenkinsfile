@@ -10,15 +10,15 @@ pipeline {
                 sh '''
                     sleep 10
                 '''
+                }
             }
-
-        } 
+        }     
 
         stage('PARALLEL STAGE'){
             parallel{
-                stage{
+                stage('Windows Testing'){
                     steps{
-                        echo "Windows Testing"
+                        echo "This is Windows Testing running"
 
                         sh '''
                            sleep 10
@@ -27,9 +27,9 @@ pipeline {
 
                 } 
 
-                stage{
+                stage('MACOS Testing'){
                     steps{
-                        echo "MACOS Testing"
+                        echo "This is MACOS Testing running"
 
                         sh '''
                            sleep 10
@@ -39,7 +39,6 @@ pipeline {
                 } 
             }  
         }    
-    }
 
     stages{
         stage('STAGE1'){
