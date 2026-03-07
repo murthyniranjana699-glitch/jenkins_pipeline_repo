@@ -12,7 +12,7 @@ pipeline {
                 '''
                 }
             }
-        }     
+             
 
         stage('PARALLEL STAGE'){
             parallel{
@@ -25,7 +25,7 @@ pipeline {
                         '''
                     }
 
-                } 
+                }
 
                 stage('MACOS Testing'){
                     steps{
@@ -40,7 +40,7 @@ pipeline {
             }  
         }    
 
-    stages{
+   
         stage('STAGE1'){
 
             steps{
@@ -52,5 +52,5 @@ pipeline {
             }   
         }  
 
-    }   
+    }
 }
