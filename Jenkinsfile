@@ -41,7 +41,7 @@ pipeline {
         }    
 
    
-        stage('STAGE1'){
+        stage('STAGE3'){
 
             steps{
                 echo "This the final stage is running"
