@@ -22,11 +22,8 @@ pipeline {
         }
              
         stage('STAGE2 when enviroment'){
-            when {
-                allof{
-                    branch 'main'   
-                    environment name: 'CURRENT_ENV', value: 'prod'
-                }
+            when {   
+              environment name: 'CURRENT_ENV', value: 'prod'    
             }
             steps{
                 echo 'This is stage 2 running for environment'
