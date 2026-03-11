@@ -25,7 +25,7 @@ pipeline {
             when {
                 allof{
                     branch 'main'   
-                environment name: 'CURRENT_ENV', value: 'prod'
+                    environment name: 'CURRENT_ENV', value: 'prod'
                 }
             }
             steps{
