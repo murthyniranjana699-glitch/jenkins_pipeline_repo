@@ -1,38 +1,48 @@
 pipeline {
     agent any
+    parameters{
+        booleanParam (name: 'DEPLOY', decription: 'when to deploy to production')
+    }
+    environment{
+        CURRENT_ENV=   'prod'
+    }
 
     stages{
-        stage('STAGE1_A'){
-
+        stage('STAGE1 when branch'){
+            when {
+                branch 'main'
+            }
             steps{
-                catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE'){
-                    echo "This is Stage1_a running"
+                echo 'This is stage is running'
                     sh '''
                         sleep 10
                         exit 1
-                    ''' }
-                }
+                    ''' 
             }
+        }
              
-
-        stage('STAGE1_B'){
-            steps{
-                Script{
-                    try{
-                        sh '''
-                            sleep 5
-                            exit 1 
-                        '''
-                    }
-                    catch (err){
-                        echo "Error Caught: $(err)"
-                        currentBuild.result: 'SUCCESS'
-                        currentBuild.result: 'FAILURE'
-
-                    }
+        stage('STAGE2 when enviroment'){
+            when {
+                allof{
+                    branch 'main'   
+                environment name: 'CURRENT_ENV', value: 'prod'
                 }
             }
+            steps{
+                echo 'This is stage 2 running for environment'
+                sh 'sleep 15'
+            }
 
-        }    
+        }   
+
+        stage('when parameter'){
+            when{
+                expression {params.DEPLOY == true}
+            }
+            steps{
+                echo 'This is the Final stage runnig'
+                sh 'sleep 10'
+            }
+        } 
     }
 }
