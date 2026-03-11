@@ -34,7 +34,7 @@ pipeline {
 
         stage('when parameter'){
             when{
-                expression {params.DEPLOY == true}
+                expression {params.DEPLOY == false}
             }
             steps{
                 echo 'This is the Final stage runnig'
