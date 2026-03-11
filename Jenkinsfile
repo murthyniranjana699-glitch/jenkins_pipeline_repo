@@ -1,45 +1,49 @@
 pipeline {
     agent any
-    parameters{
-        booleanParam (name: 'DEPLOY', description: 'when to deploy to production')
-    }
-    environment{
-        CURRENT_ENV=   'prod'
+
+    parameters {
+        booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploy to production')
     }
 
-    stages{
-        stage('STAGE1 when branch'){
+    environment {
+        CURRENT_ENV = 'prod'
+    }
+
+    stages {
+
+        stage('STAGE1 when branch') {
             when {
                 branch 'main'
             }
-            steps{
-                echo 'This is stage is running'
-                    sh '''
-                        sleep 10
-                        exit 1
-                    ''' 
+            steps {
+                echo 'This stage is running'
+                sh '''
+                    sleep 10
+                '''
             }
         }
-             
-        stage('STAGE2 when enviroment'){
-            when {   
-              environment name: 'CURRENT_ENV', value: 'prod'    
-            }
-            steps{
-                echo 'This is stage 2 running for environment'
-                sh 'sleep 15'
-            }
 
-        }   
-
-        stage('when parameter'){
-            when{
-                expression {params.DEPLOY == false}
+        stage('CHECKOUT') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        credentialsId: 'aws_pem',
+                        url: 'https://github.com/murthyniranjana699-glitch/jenkins_pipeline_repo.git'
+                    ]]
+                ])
             }
-            steps{
-                echo 'This is the Final stage runnig'
+        }
+
+        stage('Deploy Stage') {
+            when {
+                expression { params.DEPLOY }
+            }
+            steps {
+                echo 'This is the final stage running'
                 sh 'sleep 10'
             }
-        } 
+        }
     }
 }
