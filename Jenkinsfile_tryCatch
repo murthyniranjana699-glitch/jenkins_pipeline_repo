@@ -2,57 +2,37 @@ pipeline {
     agent any
 
     stages{
-        stage('Test1'){
+        stage('STAGE1_A'){
 
             steps{
-                catchError (buildResult: 'FAILURE', stageResult: 'FAILURE'){
-
-                sh '''
-                    sleep 10
-                    exit 1
-                '''
-                }
+                catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                    echo "This is Stage1_a running"
+                    sh '''
+                        sleep 10
+                        exit 1
+                    ''' }
                 }
             }
              
 
-        stage('PARALLEL STAGE'){
-            parallel{
-                stage('Windows Testing'){
-                    steps{
-                        echo "This is Windows Testing running"
-
-                        sh '''
-                           sleep 10
-                        '''
-                    }
-
-                }
-
-                stage('MACOS Testing'){
-                    steps{
-                        echo "This is MACOS Testing running"
-
-                        sh '''
-                           sleep 10
-                        '''
-                    }
-
-                } 
-            }  
-        }    
-
-   
-        stage('STAGE3'){
-
+        stage('STAGE1_B'){
             steps{
-                echo "This the final stage is running"
+                Script{
+                    try{
+                        sh '''
+                            sleep 5
+                            exit 1 
+                        '''
+                    }
+                    catch (err){
+                        echo "Error Caught: $(err)"
+                        currentBuild.result: 'SUCCESS'
+                        currentBuild.result: 'FAILURE'
 
-                sh '''
-                    sleep 10
-                '''
-            }   
-        }  
+                    }
+                }
+            }
 
+         }    
     }
 }

@@ -13,7 +13,7 @@ pipeline {
             agent {label 'my_slave1'}
 
             steps{
-                echo "TNAME: ${params.NAME}"
+                echo "NAME: ${params.NAME}"
                 echo "SKIP_TEST: ${params.SKIP_TEST}"
                 echo "BARNCH TO DEPLOY: ${params.BRANCH}"
 
