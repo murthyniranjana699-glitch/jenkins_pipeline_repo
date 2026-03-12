@@ -1,8 +1,7 @@
 pipeline {
     agent any
-
-    parameters {
-        booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploy to production')
+    triggers {
+        pollSCM ('H/5 * * * *')
     }
 
     environment {
@@ -10,18 +9,6 @@ pipeline {
     }
 
     stages {
-
-        stage('STAGE1 when branch') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'This stage is running'
-                sh '''
-                    sleep 10
-                '''
-            }
-        }
 
         stage('CHECKOUT') {
             steps {
@@ -36,14 +23,17 @@ pipeline {
             }
         }
 
-        stage('Deploy Stage') {
+        stage('STAGE1 when branch') {
             when {
-                expression { params.DEPLOY }
+                branch 'main'
             }
             steps {
-                echo 'This is the final stage running'
-                sh 'sleep 10'
+                echo 'This stage is running'
+                sh '''
+                    sleep 10
+                '''
             }
         }
+
     }
 }
