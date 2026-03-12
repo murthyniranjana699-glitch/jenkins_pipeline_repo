@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    triggers {
-        pollSCM ('H/5 * * * *')
-    }
-
     environment {
         CURRENT_ENV = 'prod'
     }
@@ -24,9 +20,6 @@ pipeline {
         }
 
         stage('STAGE1 when branch') {
-            when {
-                branch 'main'
-            }
             steps {
                 echo 'This stage is running'
                 sh '''
