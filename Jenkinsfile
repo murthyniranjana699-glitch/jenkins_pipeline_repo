@@ -1,10 +1,11 @@
 pipeline {
 
     agent any
-    
+
     triggers{
         cron('H/5 * * * *')
     }
+    
     environment {
         CURRENT_ENV = 'prod'
     }
