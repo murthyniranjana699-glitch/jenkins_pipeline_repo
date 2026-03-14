@@ -8,8 +8,8 @@ pipeline {
 
     options{
         ansiColor('xterm') 
-        disableConcurrentBuilds(abroptPrevious: true)
-        buildDiscader(logRotator(numtoKeepStr: '2'))
+        disableConcurrentBuilds(abortPrevious: true)
+        buildDiscader(logRotator(numToKeepStr: '2'))
         disableResume()
         timeout(time: 2, unit: 'MUNIETS')
     }
