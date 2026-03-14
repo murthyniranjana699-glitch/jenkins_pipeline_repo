@@ -5,7 +5,15 @@ pipeline {
     triggers{
         cron('H/5 * * * *')
     }
-    
+
+    options{
+        ansiColor('xterm') 
+        disableConcurrentBuilds(abroptPrevious: true)
+        buildDiscader(logRotator(numtoKeepStr: '2'))
+        disableResume()
+        timeout(time: 2, unit: 'MUNIETS')
+    }
+
     environment {
         CURRENT_ENV = 'prod'
     }
