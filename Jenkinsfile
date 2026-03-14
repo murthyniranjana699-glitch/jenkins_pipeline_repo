@@ -9,7 +9,7 @@ pipeline {
     options{
         ansiColor('xterm') 
         disableConcurrentBuilds(abortPrevious: true)
-        buildDiscader(logRotator(numToKeepStr: '2'))
+        buildDiscarder(logRotator(numToKeepStr: '2'))
         disableResume()
         timeout(time: 2, unit: 'MINUTES')
     }
